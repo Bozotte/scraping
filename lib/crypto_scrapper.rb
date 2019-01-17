@@ -9,13 +9,13 @@ require 'open-uri'
 
 #Dotenv.load # Ceci appelle le fichier .env grâce à la gem Dotenv, et importe toutes les données enregistrées dans un hash ENV
 
-value = []
 currency = []
+value = []
 
 page = Nokogiri::HTML(open("https://coinmarketcap.com/all/views/all//"))   
-#récupérer tous les liens d'une page + ajout de la classe avec l'inspecteur
 
 page.xpath('//a[@class="link-secondary"]'). each do |devise|
+	#récupérer tous les liens d'une page + ajout de la classe avec l'inspecteur
 
 		 currency << devise.text
 
@@ -25,31 +25,33 @@ end
 
 
 page.xpath('//a[@class="price"]').each do | price |
-		 
+	#récupérer tous les liens d'une page + ajout de la classe avec l'inspecteur
+
 		 value << price.text
 
 end
 
 # Print prix (cours) des cryptos
 
-puts page.class   # => Nokogiri::HTML::Document
-end
-	end
 
-# Le cours du prix des cryptos > //*[@id="th-price"] 
+values = value.map{|e| e.delete('$').to_f } 
 
+=begin 
 
-a = [
-  { "BTC" => 5245.12 },
-  { "ETH" => 217.34 }, 
-  etc
-]
+# .map = First, you have an array, but it could also be a hash, or a range. 
+Then you call map with a block.The block is this thing between brackets { ... }.
+Inside the block you say HOW you want to transform every element in the array. 
+It’s basically a function.
 
+# to_f = floating point number > Extraneous characters past the end 
+of a valid number are ignored. 
 
-
-
-=begin
-Nous pouvons vérifier la taille de l'array, et la comparer au nombre de cryptomonnaies sur le site : on doit avoir autant d'entrée dans notre array que de crypto sur le site. Mais ce n'est pas très robuste, car il suffit qu'une cryptomonnaie soit rajoutée et tout plante. 
-Une autre technique serait de vérifier au moins une entrée dans l’array. On est rassurés si, dans notre array, il existe un hash qui a BTC en key et un float non nul et non Nil en value. En cas d'absence, c'est que notre scrappeur n'a pas récupéré le Bitcoin (oups), ou s'il n'a pas de float associé, c'est qu'il n'a pas bien récupéré le cours du Bitcoin (oups bis).
-=> Au final, une bonne solution pourrait être un mix des deux : vérifier que ton scrappeur récupère au moins x cryptomonnaies (comme ça, t'es pas à une près) et vérifier la présence de 2-3 cryptomonnaies phares (avec un cours non Nil et non nul).
 =end
+
+my_hash = Hash[currency.zip(values.map)]
+
+print my_hash
+
+
+
+
