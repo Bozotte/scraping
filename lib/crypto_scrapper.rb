@@ -11,6 +11,7 @@ require 'open-uri'
 
 currency = []
 value = []
+a = []
 
 page = Nokogiri::HTML(open("https://coinmarketcap.com/all/views/all//"))   
 
@@ -51,6 +52,8 @@ of a valid number are ignored.
 my_hash = Hash[currency.zip(values.map)]
 
 print my_hash
+
+my_hash.each {|index| a << {index[0] => index[1]}}
 
 
 
