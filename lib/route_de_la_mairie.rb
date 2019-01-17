@@ -10,16 +10,21 @@ townhall=[]
 
 page = Nokogiri::HTML(open("http://www.annuaire-des-mairies.com/val-d-oise.html"))
 page.xpath('//p/a').each do |name|
-  townhall << name.text
+	#va me chercher la page et ensuite // (tu vas sur une page précise). Sur le fichier
+	#html de la page, tu cherches le p de paragraphe et le a (liens).
+    #puis il va met les liens (p et a) dans la variable "name"
+  	townhall << name.text
+
 end
 
 email = []
 
 page = Nokogiri::HTML(open("http://annuaire-des-mairies.com/95/"))
-news_links = page.css("a")
-news_links.each do |link|
-    page_annuaire = Nokogiri::HTML(open("http://annuaire-des-mairies.com/95/#{link['href']}"))
-    page_annuaire.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]').each do |mail|
+news_links = page.css("a") #une fois que j'ai tous les a, je le mets dans la variable |mail] Les liens a, je les fous dans "links"
+news_links.each do |mail| #je demande à ce que tu mettes les liens dans la variable |mail| (orange)
+    page_annuaire = Nokogiri::HTML(open("http://annuaire-des-mairies.com/95/#{link['href']}")) #page-annuaire (variable) - 
+    page_annuaire.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]').each do |mail| #xpath tu vas par exemple ici: 
+    	#https://www.annuaire-des-mairies.com/95/avernes.html, puis tu prends le mail, puis tu fais clic droit et "copie xpath"
     email << mail.text
 
   end
