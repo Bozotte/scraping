@@ -1,17 +1,36 @@
  # ligne très importante qui appelle la gem.
 require 'pry'
-require 'dotenv'
+#require 'dotenv'
 require 'nokogiri'
 require 'rubocop'
 require 'rspec'
 require 'rubygems'
 require 'open-uri'
 
-Dotenv.load # Ceci appelle le fichier .env grâce à la gem Dotenv, et importe toutes les données enregistrées dans un hash ENV
+#Dotenv.load # Ceci appelle le fichier .env grâce à la gem Dotenv, et importe toutes les données enregistrées dans un hash ENV
 
-	def crypto_scrapper
+value = []
+currency = []
 
 page = Nokogiri::HTML(open("https://coinmarketcap.com/all/views/all//"))   
+#récupérer tous les liens d'une page + ajout de la classe avec l'inspecteur
+
+page.xpath('//a[@class="link-secondary"]'). each do |devise|
+
+		 currency << devise.text
+
+end
+
+# Print Currency (devises)
+
+
+page.xpath('//a[@class="price"]').each do | price |
+		 
+		 value << price.text
+
+end
+
+# Print prix (cours) des cryptos
 
 puts page.class   # => Nokogiri::HTML::Document
 end
