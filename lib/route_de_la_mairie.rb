@@ -21,7 +21,7 @@ email = []
 
 page = Nokogiri::HTML(open("http://annuaire-des-mairies.com/95/"))
 news_links = page.css("a") #une fois que j'ai tous les a, je le mets dans la variable |mail] Les liens a, je les fous dans "links"
-news_links.each do |mail| #je demande à ce que tu mettes les liens dans la variable |mail| (orange)
+news_links.each do |link| #je demande à ce que tu mettes les liens dans la variable |mail| (orange)
     page_annuaire = Nokogiri::HTML(open("http://annuaire-des-mairies.com/95/#{link['href']}")) #page-annuaire (variable) - 
     page_annuaire.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[4]/td[2]').each do |mail| #xpath tu vas par exemple ici: 
     	#https://www.annuaire-des-mairies.com/95/avernes.html, puis tu prends le mail, puis tu fais clic droit et "copie xpath"
